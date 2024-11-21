@@ -8,7 +8,6 @@ import org.example.util.NumberUtil;
 import org.example.util.buttons.InlineKeyboardStorage;
 import org.example.util.buttons.InlinebuttonsStorage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
 import java.sql.SQLException;
 
 public class RegisterLogic {
@@ -21,7 +20,7 @@ public class RegisterLogic {
 
 
 
-    public SendMessage processWaitingCommandStart(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingCommandStart(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
 
@@ -29,12 +28,14 @@ public class RegisterLogic {
             messageToUser.setText("Ошибка запуска бота. Для старта пожалуйста введите: /start");
             return messageToUser;
         }
-        messageToUser.setText("Приветствую! Пожалуйста, введите название команды (от 3  до 30 символов включительно: ");
+
         transmittedData.setState(State.WaitingInputTeamName);
+        messageToUser.setText("Приветствую! Пожалуйста, введите название команды (от 3  до 30 символов включительно: ");
+
         return messageToUser;
 
     }
-    public SendMessage processWaitingInputTeamName(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingInputTeamName (String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
         if (textFromUser.length() > 30){
@@ -42,12 +43,13 @@ public class RegisterLogic {
             return messageToUser;
         }
         transmittedData.getDataStorage().add("teamName", textFromUser);
-        messageToUser.setText("Название команды успешно записано. Теперь введите количество человек в команде от 1 до 4");
+        String teamName = (String) transmittedData.getDataStorage().get("teamName");
+        messageToUser.setText("Название команды успешно записано. Теперь, пожалуйста, введите количество человек в команде от 1 до 4 включительно");
         transmittedData.setState(State.WaitingInputNumberOfParticipants);
         return messageToUser;
 
     }
-    public SendMessage processWaitingInputNumberOfParticipants(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingInputNumberOfParticipants(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
 
@@ -66,7 +68,7 @@ public class RegisterLogic {
         transmittedData.setState(State.WaitingInputSelectedTask);
         return messageToUser;
     }
-    public SendMessage processWaitingInputSelectedTask(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingInputSelectedTask(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
 
@@ -93,27 +95,27 @@ public class RegisterLogic {
 
         return messageToUser;
     }
-    public SendMessage processWaitingApproveData(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingApproveData(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
         return messageToUser;
 
 
     }
-    public SendMessage processWaitingShowOrRegister(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingShowOrRegister(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
 
 
         return messageToUser;
     }
-    public SendMessage processWaitingLastShowCommands(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingLastShowCommands(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());;
         return messageToUser;
 
     }
-    public SendMessage processWaitingMiddleShowCommands(String textFromUser, TransmittedData transmittedData){
+    public SendMessage processWaitingMiddleShowCommands(String textFromUser, TransmittedData transmittedData) throws Exception {
         SendMessage messageToUser = new SendMessage();
         messageToUser.setChatId(transmittedData.getChatId());
         return messageToUser;
